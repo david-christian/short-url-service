@@ -101,9 +101,9 @@ app.get("/shortURL/:hashId", async (req, res) => {
     };
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Example app listening at http://localhost:${port}`);
-    redisClient.connect();
+    await redisClient.connect();
     redisClient.on("connect", () => {
         console.log("Redis client connected");
     });
