@@ -72,6 +72,7 @@ app.post("/service", async (req, res) => {
 app.get("/shortURL/:hashId", async (req, res) => {
     try {
         const hashId = req.params.hashId;
+        await redisClient.connect();
         let url = await redisClient.get(hashId);
         // redis 無資料，找 RDBMS
         if (!url) {
@@ -80,6 +81,7 @@ app.get("/shortURL/:hashId", async (req, res) => {
             if (isValue) {
                 console.log("/shortURL Mysql 找到資料，重新寫回 redis 熱資料");
                 // 如果 db 裡有資料，就重新將資料加入redis“熱資料”當中
+                await redisClient.connect();
                 await redisClient.set(hashId, isValue.url, { EX: threeDay });
                 await redisClient.set(isValue.hashUrl, hashId, { EX: threeDay });
 
@@ -114,6 +116,7 @@ async function handleSaveData (params, cb) {
     try {
         const { url, ip, hashUrl } = params;
         let { hashId } = params;
+        await redisClient.connect();
         const redisData = await redisClient.get(hashUrl);
         if (redisData) hashId = redisData;
         // redis 無資料或資料已過期，接著去資料庫確認
@@ -124,6 +127,7 @@ async function handleSaveData (params, cb) {
                 const inserData = await mysqlUtils.saveDb(params);
                 console.log("/service 新資料存進 mysql database, ID為：", inserData.insertId);
             };
+            await redisClient.connect();
             await redisClient.set(hashId, url, { EX: threeDay });
             await redisClient.set(hashUrl, hashId, { EX: threeDay });
             console.log("/service redis資料寫入");
