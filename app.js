@@ -56,7 +56,7 @@ app.post("/service", async (req, res) => {
                 return res.json({ok: false});
             };
             const { hashId, dedupIpCount } = result;
-            const hashValue = "http://" + domain + ":3006" + "/shortURL/" + hashId;
+            const hashValue = "https://" + domain + ":3006" + "/shortURL/" + hashId;
             console.log(`/service success hashValue: ${hashValue} dedupIpCount: ${dedupIpCount} ogImage: ${ogImage} ogTitle: ${ogTitle}`);
             res.status(200);
             return res.json({ok: true, hashValue, dedupIpCount, ogImage, ogTitle});

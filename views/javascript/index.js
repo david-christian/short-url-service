@@ -1,4 +1,4 @@
-const uri = "http://localhost:3006/service"
+const uri = "https://stormy-fortress-99809.herokuapp.com//service"
 let isClick = true
 $("#shortUrlButton").click(() => {
     if (isClick) {
