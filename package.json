@@ -1,0 +1,29 @@
+{
+  "name": "shortURL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2-runtime start ecosystem.config.js --env production", 
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "crypto-js": "^4.1.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "moment": "^2.29.1",
+    "mysql2": "^2.3.3",
+    "node-redis": "^0.1.7",
+    "open-graph-scraper": "^4.11.0",
+    "redis": "^4.0.4",
+    "sass": "^1.50.0"
+  }
+}
