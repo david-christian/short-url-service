@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // 首頁
 app.get("/", (req, res) => {
-    res.render("index");
+    return res.render("index");
 });
 
 // 縮短網址服務
@@ -56,7 +56,7 @@ app.post("/service", async (req, res) => {
                 return res.json({ok: false});
             };
             const { hashId, dedupIpCount } = result;
-            const hashValue = "https://" + domain + "/shortURL/" + hashId;
+            const hashValue = "https://" + domain + "/" + hashId;
             console.log(`/service success hashValue: ${hashValue} dedupIpCount: ${dedupIpCount} ogImage: ${ogImage} ogTitle: ${ogTitle}`);
             res.status(200);
             return res.json({ok: true, hashValue, dedupIpCount, ogImage, ogTitle});
@@ -69,7 +69,7 @@ app.post("/service", async (req, res) => {
 });
 
 // 轉址
-app.get("/shortURL/:hashId", async (req, res) => {
+app.get("/:hashId", async (req, res) => {
     try {
         const hashId = req.params.hashId;
         let url = await redisClient.get(hashId);
